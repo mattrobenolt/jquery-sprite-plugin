@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>jQuery Sprite Plugin Demos</title>
+    <style>
+    div.sprite {
+        background: url('walk-cycle.png') top left no-repeat;
+        display: block;
+        width: 48px;
+        height: 92px;
+        border: 1px solid red;
+    }
+    textarea {
+        display: block;
+        width: 100px;
+    }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script src="../jquery.sprite.js"></script>
+    <script>
+    $(function(){
+        $('#sprite_once_start').click(function(){
+            $('#sprite_once').sprite({
+                //size: [48, 92],
+                speed: 50,
+                frames: 72,
+                columns: 9,
+                mode: 'once',
+                onStep: function(e)
+                {
+                    log($(this).next('textarea'), e.step);
+                },
+                onComplete: function()
+                {
+                    log($(this).next('textarea'), 'Done!');
+                }
+            });
+        });
+
+        $('#sprite_bounce_start').click(function(){
+            $('#sprite_bounce').sprite({
+                //size: [48, 92],
+                speed: 50,
+                frames: 72,
+                columns: 9,
+                mode: 'bounce',
+                onStep: function(e)
+                {
+                    log($(this).next('textarea'), e.step);
+                }
+            });
+        });
+
+         $('#sprite_loop_start').click(function(){
+            $('#sprite_loop').sprite({
+                size: [48, 92],
+                speed: 50,
+                frames: 72,
+                columns: 9,
+                mode: 'loop',
+                onStep: function(e)
+                {
+                    log($(this).next('textarea'), e.step);
+                }
+            });
+        });
+
+        $('#sprite_all_start').click(function(){
+            $('.sprite').sprite({
+                size: [48, 92],
+                speed: 50,
+                frames: 72,
+                columns: 9,
+                mode: 'once',
+                onStep: function(e)
+                {
+                    log($(this).next('textarea'), e.step);
+                },
+                onComplete: function()
+                {
+                    log($(this).next('textarea'), 'Done!');
+                }
+            });
+        });
+
+        $('textarea').val('======\nLog');
+
+        function log(to, what)
+        {
+            to.val(what+"\n"+to.val());
+        }
+    });
+    </script>
+</head>
+<body>
+    <h1>jQuery Sprite Plugin Demo</h1>
+    <div id="sprite_once" class="sprite"></div><textarea>Log</textarea><button id="sprite_once_start">Start Once</button><br /><br />
+    <div id="sprite_bounce" class="sprite"></div><textarea></textarea><button id="sprite_bounce_start">Start Bounce</button><br /><br />
+    <div id="sprite_loop" class="sprite"></div><textarea></textarea><button id="sprite_loop_start">Start Loop</button><br /><br /><br />
+    <button id="sprite_all_start">Play All Once</button>
+</body>
+</html>
