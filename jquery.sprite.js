@@ -10,26 +10,27 @@
     
     $.fn.sprite = function(options)
     {
-        var defaults = {
+        var config = {
             size: false, // [width, height]
             speed: 200, // delay between frames
             frames: 5,
             mode: 'once', // once, loop, or bounce
-            columns: -1, // -1 is unlimited, used to wrap a wide sprite sheet into rows if necessary
-            onComplete: $.noop, // onComplete: function()
-            onStep: $.noop // onStep: function(e)
+            columns: -1 // -1 is unlimited, used to wrap a wide sprite sheet into rows if necessary
+            //onComplete: $.noop, // onComplete: function()
+            //onStep: $.noop // onStep: function(e)
         },
 
-        o = $.extend({}, defaults, options),
         KEY = '__sprite__', // data key to detect if the sprite sheet is running or not
         _setTimeout = setTimeout; // shortcut to remove a few bytes when minified
+
+        $.extend(config, options);
         
         function setBackgroundPosition(el, x, y)
         {
             el.style.backgroundPosition = x+'px '+y+'px';
         }
         
-        !o.size && (o.size = [this.width(), this.height()]); // try and guess the width and height of the frame if not defined
+        !config.size && (config.size = [this.width(), this.height()]); // try and guess the width and height of the frame if not defined
         
         return this.each(function()
         {
@@ -44,23 +45,23 @@
             
             // move the background to 0,0 to start
             setBackgroundPosition(t, 0, 0);
-            _setTimeout(doStep, o.speed);
+            _setTimeout(doStep, config.speed);
             
             function doStep()
             {
                 // calculate current column and row to be in based on the current step
-                var column = (o.columns > -1) ? step % o.columns : step,
-                    row = (o.columns > -1) ? Math.floor(step / o.columns) : 0;
+                var column = (config.columns > -1) ? step % config.columns : step,
+                    row = (config.columns > -1) ? Math.floor(step / config.columns) : 0;
                 
-                setBackgroundPosition(t, -(column*o.size[0]), -(row*o.size[1]));
+                setBackgroundPosition(t, -(column*config.size[0]), -(row*config.size[1]));
                 
-                typeof o.onStep === 'function' && o.onStep.apply(t, [{column: column, row: row, step: step}]);
+                typeof config.onStep === 'function' && config.onStep.apply(t, [{column: column, row: row, step: step}]);
                 
-                switch(o.mode)
+                switch(config.mode)
                 {
                     case 'loop':
                         // if the next step is the last frame, jump back to the beginning
-                        if(++step === o.frames)
+                        if(++step === config.frames)
                         {
                             step = 0;
                         }
@@ -73,26 +74,26 @@
                             break;
                         }
                         // if the loop is current going forward, and the next step is the last, reverse it.
-                        if(stepDirection > 0 && ++step === o.frames)
+                        if(++step === config.frames)
                         {
                             stepDirection = -1;
-                            step-=2; // subtract two because the we need the frame before (o.frames-1)
+                            step-=2; // subtract two because the we need the frame before (config.frames-1)
                             break;
                         }
                     break;
                     case 'once':
                     default:
                         // if the next step is the last, trigger the onComplete callback
-                        if(++step === o.frames)
+                        if(++step === config.frames)
                         {
-                            typeof o.onComplete === 'function' && o.onComplete.apply(t);
+                            typeof config.onComplete === 'function' && config.onComplete.apply(t);
                             $(t).removeData(KEY);
                             return;
                         }
                     break;
                 }
                 
-                _setTimeout(doStep, o.speed);
+                _setTimeout(doStep, config.speed);
             }
         });
     };
