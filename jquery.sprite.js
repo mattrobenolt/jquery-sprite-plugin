@@ -6,11 +6,11 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 
-(function($, undefined){
+(function($){
     
     $.fn.sprite = function(options)
     {
-        $.fn.sprite.defaults = {
+        var defaults = {
             size: false, // [width, height]
             speed: 200, // delay between frames
             frames: 5,
@@ -18,14 +18,15 @@
             columns: -1, // -1 is unlimited, used to wrap a wide sprite sheet into rows if necessary
             onComplete: $.noop, // onComplete: function()
             onStep: $.noop // onStep: function(e)
-        };
+        },
 
-        var o = $.extend({}, $.fn.sprite.defaults, options),
-            KEY = '__sprite__';
+        o = $.extend({}, defaults, options),
+        KEY = '__sprite__', // data key to detect if the sprite sheet is running or not
+        _setTimeout = setTimeout; // shortcut to remove a few bytes when minified
         
-        function setBackgroundPosition(el, p)
+        function setBackgroundPosition(el, x, y)
         {
-            el.style.backgroundPosition = p.x+'px '+p.y+'px';
+            el.style.backgroundPosition = x+'px '+y+'px';
         }
         
         !o.size && (o.size = [this.width(), this.height()]); // try and guess the width and height of the frame if not defined
@@ -42,8 +43,8 @@
             $(t).data(KEY, 1);
             
             // move the background to 0,0 to start
-            setBackgroundPosition(t, {x:0, y:0});
-            setTimeout(doStep, o.speed);
+            setBackgroundPosition(t, 0, 0);
+            _setTimeout(doStep, o.speed);
             
             function doStep()
             {
@@ -51,7 +52,7 @@
                 var column = (o.columns > -1) ? step % o.columns : step,
                     row = (o.columns > -1) ? Math.floor(step / o.columns) : 0;
                 
-                setBackgroundPosition(t, {x: -(column*o.size[0]), y: -(row*o.size[1])});
+                setBackgroundPosition(t, -(column*o.size[0]), -(row*o.size[1]));
                 
                 typeof o.onStep === 'function' && o.onStep.apply(t, [{column: column, row: row, step: step}]);
                 
@@ -91,7 +92,7 @@
                     break;
                 }
                 
-                setTimeout(doStep, o.speed);
+                _setTimeout(doStep, o.speed);
             }
         });
     };
