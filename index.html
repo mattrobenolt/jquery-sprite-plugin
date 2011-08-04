@@ -8,25 +8,91 @@
   <style type="text/css">
     body {
       margin-top: 1.0em;
-      background-color: #06de97;
+      background-color: #fafafa;
       font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
+      color: #000;
     }
     #container {
       margin: 0 auto;
       width: 700px;
     }
-    h1 { font-size: 3.8em; color: #f92168; margin-bottom: 3px; }
+    h1 { font-size: 3.8em; color: #000; margin-bottom: 3px; }
     h1 .small { font-size: 0.4em; }
     h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #f92168; }
-    h3 { text-align: center; color: #f92168; }
-    a { color: #f92168; }
+    h2 { font-size: 1.5em; color: #000; }
+    h3 { color: #000; }
+    a { color: #090; }
     .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
     .download { float: right; }
     pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    hr { border: 0; width: 75%; border-bottom: 1px solid #aaa; margin: 20px 0 35px;}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
+    .clear { clear: both; }
+    h4 {margin-bottom: 0;}
+    .note { font-size: 0.8em; color: #666; }
+
+
+    .source {
+        display: block;
+        width: 500px;
+    }
+    .sprite {
+        background: url('walk-cycle.png') top left no-repeat;
+        display: block;
+        width: 48px;
+        height: 92px;
+        margin: 0 30px 10px 0;
+        float: left;
+    }
+    .status {
+      font-size: 20px;
+    }
+    textarea {
+        display: block;
+        width: 100px;
+    }
+
+    .minibutton, .minibutton.disabled:hover {
+        background: -moz-linear-gradient(center top , #F4F4F4, #ECECEC) repeat scroll 0 0     transparent;
+        border: 1px solid #D4D4D4;
+        border-radius: 3px 3px 3px 3px;
+        color: #333333;
+        cursor: pointer;
+        display: inline-block;
+        font-family: helvetica,arial,freesans,clean,sans-serif;
+        overflow: visible;
+        position: relative;
+        text-shadow: 1px 1px 0 #FFFFFF;
+        white-space: nowrap;
+        font-size: 11px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .minibutton > span {
+        display: block;
+        height: 21px;
+        line-height: 21px;
+        padding: 0 9px 0 7px;
+    }
+
+    a.play {
+      margin: 10px 0;
+      font-size: 14px;
+    }
+
+    .gist {
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .nx, .p {
+        color: #000;
+    }
+
+    .gist .gist-file .gist-data {
+        background: #fff;
+    }
   </style>
 </head>
 
@@ -42,19 +108,56 @@
         <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
     </div>
 
-    <h1><a href="http://github.com/mattrobenolt/jquery-sprite-plugin">jquery-sprite-plugin</a>
-      <span class="small">by <a href="http://github.com/mattrobenolt">mattrobenolt</a></span></h1>
+    <h1><a href="http://github.com/mattrobenolt/jquery-sprite-plugin">jquery-sprite-plugin</a><br />
+      <span class="small">by <a href="http://github.com/mattrobenolt">Matt Robenolt</a></span></h1>
 
     <div class="description">
-      Animate a sprite sheet with jQuery
+      Animate a traditional sprite sheet with jQuery
+    </div>
+
+    <h2>Description</h2>
+    <p>jquery-sprite gives you the ability to animate over a traditional 1D or 2D sprite sheet. Great for playing animations exported out from 3D software or videos converted to a sprite sheet. This allows smaller file sizes than an animated gif, plus control over speed and play methods (once, bouce, or loop) at runtime.</p>
+    <p class="note">All of the examples on this page use this walk cycle for reference: <a href="walk-cycle.png">walk-cycle.png</a></p>
+
+    <h2>Play Once</h2>
+    <div class="example">
+      <div id="sprite_once" class="sprite"></div><a id="sprite_once_start" class="minibutton play"><span>Play</span></a><br /><span class="status"></span>
+    </div>
+    <div class="clear"></div>
+    <div class="source">
+      <h4>Source</h4>
+      <script src="https://gist.github.com/1125427.js?file=sprite1.js"></script>
+    </div>
+
+    <hr />
+
+    <h2>Bounce</h2>
+    <div class="example">
+      <div id="sprite_bounce" class="sprite"></div><a id="sprite_bounce_start" class="minibutton play"><span>Play</span></a><br /><span class="status"></span>
+    </div>
+    <div class="clear"></div>
+    <div class="source">
+      <h4>Source</h4>
+      <script src="https://gist.github.com/1125427.js?file=sprite2.js"></script>
+    </div>
+    
+    <hr />
+
+    <h2>Loop</h2>
+    <div class="example">
+      <div id="sprite_loop" class="sprite"></div><a id="sprite_loop_start" class="minibutton play"><span>Play</span></a><br /><span class="status"></span>
+    </div>
+    <div class="clear"></div>
+    <div class="source">
+      <h4>Source</h4>
+      <script src="https://gist.github.com/1125427.js?file=sprite3.js"></script>
     </div>
 
     <h2>License</h2>
-<p>MIT</p>
-<h2>Authors</h2>
-<p>Matt Robenolt (matt@ydekproductions.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Matt Robenolt (matt@ydekproductions.com)<br/>      </p>
+<p>Copyright &copy; 2011, Matt Robenolt<br />
+Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT license</a>.</p>
+    <h2>Contact</h2>
+    <p>Matt Robenolt (<a href="http://twitter.com/mattrobenolt">@mattrobenolt</a>)</p>
 
 
     <h2>Download</h2>
@@ -73,7 +176,64 @@
     </div>
 
   </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="https://raw.github.com/mattrobenolt/jquery-sprite-plugin/master/jquery.sprite.js"></script>
+    <script>
+    $(function(){
+        $('#sprite_once_start').click(function(){
+            $('#sprite_once').sprite({
+                //size: [48, 92],
+                speed: 50,
+                frames: 72,
+                columns: 9,
+                mode: 'once',
+                onStep: function(e)
+                {
+                    $(this).nextAll('.status').text(e.step);
+                },
+                onComplete: function()
+                {
+                    $(this).nextAll('.status').text('');
+                }
+            });
+        });
 
-  
+        $('#sprite_bounce_start').click(function(){
+            $(this).hide();
+            $('#sprite_bounce').sprite({
+                //size: [48, 92],
+                speed: 50,
+                frames: 72,
+                columns: 9,
+                mode: 'bounce',
+                onStep: function(e)
+                {
+                    $(this).nextAll('.status').text(e.step);
+                }
+            });
+        });
+
+         $('#sprite_loop_start').click(function(){
+            $(this).hide();
+            $('#sprite_loop').sprite({
+                size: [48, 92],
+                speed: 50,
+                frames: 72,
+                columns: 9,
+                mode: 'loop',
+                onStep: function(e)
+                {
+                    $(this).nextAll('.status').text(e.step);
+                }
+            });
+        });
+
+        $('a.gist-collapse').click(function(e)
+        {
+            e.preventDefault();
+            $(this).nextAll('.gist').slideToggle('fast');
+        });
+    });
+    </script>
 </body>
 </html>
