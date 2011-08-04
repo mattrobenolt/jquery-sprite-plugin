@@ -68,9 +68,9 @@
                     break;
                     case 'bounce':
                         // if the loop is currently reversed, and the next step is 0, bounce forward
-                        if(stepDirection < 0 && --step === 0)
+                        if(stepDirection < 0)
                         {
-                            stepDirection = 1;
+                            if(--step === 0) stepDirection = 1;
                             break;
                         }
                         // if the loop is current going forward, and the next step is the last, reverse it.
